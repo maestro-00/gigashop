@@ -1,12 +1,16 @@
+using BuildingBlocks.Behaviours;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container. 
-builder.Services.AddCarter();
 builder.Services.AddMediatR(config =>
 {
     config.RegisterServicesFromAssembly(typeof(Program).Assembly);
-}); 
-
+    config.AddOpenBehavior(typeof(ValidationBehaviour<,>));
+});  
+builder.Services.AddCarter();
 builder.Services.AddMarten(opt =>
 { 
     try
@@ -19,7 +23,7 @@ builder.Services.AddMarten(opt =>
         throw;
     }
 }).UseLightweightSessions();
-
+builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline. 
