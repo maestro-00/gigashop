@@ -16,11 +16,10 @@ public class UpdateProductCommandValidator : AbstractValidator<UpdateProductComm
         RuleFor(x => x.Price).GreaterThan(0).WithMessage("Price is required");
     }
 }
-public class UpdateProductCommandHandler(IDocumentSession session, ILogger<UpdateProductCommandHandler> logger) : ICommandHandler<UpdateProductCommand, UpdateProductResult>
+public class UpdateProductCommandHandler(IDocumentSession session) : ICommandHandler<UpdateProductCommand, UpdateProductResult>
 {
     public async Task<UpdateProductResult> Handle(UpdateProductCommand command, CancellationToken cancellationToken)
-    {
-        logger.LogInformation("UpdateProductCommandHandler started with {Query}", command);
+    { 
         var productToUpdate = await session.LoadAsync<Product>(command.Id,cancellationToken);
 
         if (productToUpdate is null) throw new ProductNotFoundException();

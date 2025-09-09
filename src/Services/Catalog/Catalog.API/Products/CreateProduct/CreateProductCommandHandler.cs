@@ -20,11 +20,10 @@ public class CreateProductCommandValidator : AbstractValidator<CreateProductComm
     }
 }
 
-public class CreateProductCommandHandler(IDocumentSession session, ILogger<CreateProductCommandHandler> logger) : ICommandHandler<CreateProductCommand, CreateProductResult>
+public class CreateProductCommandHandler(IDocumentSession session) : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
-    {
-        logger.LogInformation("CreateProductCommandHandler started with {Command}", command);
+    { 
         //Creating Product Entity
         var product = new Product
         {
