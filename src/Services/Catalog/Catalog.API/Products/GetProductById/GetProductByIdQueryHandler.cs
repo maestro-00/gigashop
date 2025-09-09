@@ -12,7 +12,7 @@ public class GetProductByIdQueryHandler(IDocumentSession session) : IQueryHandle
         var response = await session.LoadAsync<Product>(request.Id,cancellationToken);
         if (response is null)
         {
-            throw new ProductNotFoundException();
+            throw new ProductNotFoundException(request.Id);
         }
         return new GetProductByIdResult(response);
     }
