@@ -1,15 +1,16 @@
 namespace Catalog.API.Products.GetProductsByCategory;
 
-// public record GetProductsByCategoryRequest();
+public record GetProductsByCategoryRequest(int? PageNumber = 1, int? PageSize = 10);
 
 public record GetProductsByCategoryResponse(IEnumerable<Product> Products);
 public class GetProductsByCategoryEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("/products/category/{category}", async (string category, ISender sender) =>
-        {
-            var result = await sender.Send(new GetProductsByCategoryQuery(category));
+        app.MapGet("/products/category/{category}", async (string category,[AsParameters] GetProductsByCategoryRequest request, ISender sender) =>
+            { 
+                var query = request.Adapt<GetProductsByCategoryQuery>() with { Category = category };
+            var result = await sender.Send(query);
             var response = result.Adapt<GetProductsByCategoryResponse>();
             return Results.Ok(response);
         }).WithName("GetProductsByCategory")
