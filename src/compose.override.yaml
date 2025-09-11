@@ -62,3 +62,17 @@ services:
       ports:
         - "6001:8080"
         - "6061:8081"
+    
+    discount.grpc:
+      environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+        - ASPNETCORE_HTTP_PORTS=8080
+        - ASPNETCORE_HTTPS_PORTS=8081
+        - ConnectionStrings__Database=Data Source = discountdb
+        - ASPNETCORE_Kestrel__Certificates__Default__Password=sdklrcybgsczr
+        - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/discount.grpc.pfx
+      volumes:
+        - ~/.aspnet/https:/https:ro
+      ports:
+        - "6002:8080"
+        - "6062:8081"
