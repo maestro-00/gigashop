@@ -78,3 +78,12 @@ services:
       ports:
         - "6002:8080"
         - "6062:8081"
+    
+    orderdb:
+      container_name: orderdb
+      environment:
+        - ACCEPT_EULA=Y
+        - MSSQL_SA_PASSWORD=Rhonin1234
+      restart: always
+      ports:
+        - "1433:1433"

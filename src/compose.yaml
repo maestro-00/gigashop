@@ -25,6 +25,9 @@
     build:
       context: .
       dockerfile: Services/Discount/Discount.Grpc/Dockerfile
+  
+  orderdb:
+    image: mcr.microsoft.com/mssql/server:2025-latest
     
 volumes:
   postgres_catalog:
