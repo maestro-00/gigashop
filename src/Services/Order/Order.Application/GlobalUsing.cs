@@ -1,0 +1,11 @@
+global using MediatR;
+global using Order.Application.Dtos;
+global using FluentValidation;
+global using Order.Application.Data;
+global using Order.Domain.ValueObjects;
+global using Order.Application.Exceptions;
+global using Microsoft.EntityFrameworkCore;
+global using Order.Application.Extensions;
+global using BuildingBlocks.CQRS;
+global using BuildingBlocks.Pagination;
+global using Order.Domain.Models;
