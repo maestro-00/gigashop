@@ -40,21 +40,16 @@ public class Order : Aggregate<OrderId>
         return order;
     }
     
-    public static Order Update(OrderName orderName, Address billingAddress,
+    public void Update(OrderName orderName, Address billingAddress,
         Address shippingAddress, Payment payment, OrderStatus status)
     {
-        var order = new Order
-        {  
-            OrderName = orderName,
-            BillingAddress = billingAddress,
-            ShippingAddress = shippingAddress,
-            Payment = payment,
-            Status = status
-        };
+        OrderName = orderName;
+        BillingAddress = billingAddress;
+        ShippingAddress = shippingAddress;
+        Payment = payment;
+        Status = status;
 
-        order.AddDomainEvent(new OrderUpdatedEvent(order));
-        
-        return order;
+        AddDomainEvent(new OrderUpdatedEvent(this)); 
     }
     
     public void AddItem(ProductId productId, int quantity, decimal price)
