@@ -29,7 +29,7 @@ public class UpdateOrderCommandHandler(IOrderDbContext context) : ICommandHandle
         var payment = Payment.Of(orderDto.Payment.CardName, orderDto.Payment.CardNumber, orderDto.Payment.Expiration,
             orderDto.Payment.Cvv, orderDto.Payment.PaymentMethod);
 
-        Domain.Models.Order.Update(
+        order.Update(
             OrderName.Of(orderDto.OrderName),
             billingAddress,
             shippingAddress,
