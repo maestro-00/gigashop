@@ -9,7 +9,7 @@ using Order.Infrastructure.Data;
 
 #nullable disable
 
-namespace Order.Infrastructure.Data.Migrations
+namespace Order.Infrastructure.Migrations
 {
     [DbContext(typeof(OrderDbContext))]
     partial class OrderDbContextModelSnapshot : ModelSnapshot
@@ -154,6 +154,11 @@ namespace Order.Infrastructure.Data.Migrations
                                 .IsRequired()
                                 .HasMaxLength(24)
                                 .HasColumnType("nvarchar(24)");
+
+                            b1.Property<string>("Expiration")
+                                .IsRequired()
+                                .HasMaxLength(10)
+                                .HasColumnType("nvarchar(10)");
 
                             b1.Property<int>("PaymentMethod")
                                 .HasColumnType("int");
