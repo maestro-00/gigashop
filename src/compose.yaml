@@ -19,7 +19,13 @@
     build:
       context: .
       dockerfile: Services/Basket/Basket.API/Dockerfile
-      
+  
+  order.api:
+    image: order.api
+    build:
+      context: .
+      dockerfile: Services/Order/Order.API/Dockerfile
+  
   discount.grpc:
     image: discount.grpc
     build:
@@ -32,3 +38,5 @@
 volumes:
   postgres_catalog:
   postgres_basket:
+  mssql_order:
+    driver: local

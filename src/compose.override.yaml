@@ -64,6 +64,28 @@ services:
       ports:
         - "6001:8080"
         - "6061:8081"
+        
+    order.api:
+      container_name: order.api
+      environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+        - ASPNETCORE_HTTP_PORTS=8080
+        - ASPNETCORE_HTTPS_PORTS=8081
+        - ASPNETCORE_Kestrel__Certificates__Default__Password=sdklrcybgsczr
+        - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/order.api.pfx
+        - ConnectionStrings__Database=Server=orderdb;Database=OrderDb;User Id=sa;Password=Rhonin1234;Encrypt=false;TrustServerCertificate=true
+        - MessageBroker__Host=amqp://ecommerce-mq:5672
+        - MessageBroker__Username=guest
+        - MessageBroker__Password=guest
+        - FeatureManagement__OrderFulfilment=true
+      volumes:
+        - ~/.aspnet/https:/https:ro
+      depends_on:
+        - orderdb
+        - messagebroker
+      ports:
+        - "6003:8080"
+        - "6063:8081"
     
     discount.grpc:
       environment:
@@ -85,5 +107,7 @@ services:
         - ACCEPT_EULA=Y
         - MSSQL_SA_PASSWORD=Rhonin1234
       restart: always
+      volumes:
+        - mssql_order:/var/opt/mssql
       ports:
         - "1433:1433"
