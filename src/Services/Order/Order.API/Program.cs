@@ -19,6 +19,5 @@ if (app.Environment.IsDevelopment())
 {
     await app.InitialiseDatabase();
 }
-app.UseHttpsRedirection();
 
 app.Run();
