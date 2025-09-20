@@ -8,9 +8,9 @@ public class GetOrdersQueryHandler(IOrderDbContext context) : IQueryHandler<GetO
         var pageSize = query.Pagination.PageSize;
         var totalCount = await context.Orders.LongCountAsync(cancellationToken);
         var orders = await context.Orders.Include(x => x.OrderItems)
-            .Skip(pageSize * (pageIndex - 1))
-            .Take(pageSize)
             .OrderBy(x => x.OrderName.Value)
+            .Skip(pageSize * pageIndex)
+            .Take(pageSize)
             .AsNoTracking().ToListAsync(cancellationToken);
         
         return new(new(pageIndex, pageSize, totalCount, orders.ToOrderDtoList()));
