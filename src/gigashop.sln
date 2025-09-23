@@ -34,6 +34,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Order.Domain", "Services\Or
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Order.Infrastructure", "Services\Order\Order.Infrastructure\Order.Infrastructure.csproj", "{68BF0140-6970-42E2-BDD6-1CE804EF9117}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingBlocks.Messaging", "BuildingBlocks\BuildingBlocks.Messaging\BuildingBlocks.Messaging\BuildingBlocks.Messaging.csproj", "{4EACB599-70DA-48A2-A15F-3EC18FCC7FC7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateways", "ApiGateways", "{1119C7B0-CD21-4164-8E7A-151789D43257}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YarpApiGateway", "ApiGateways\YarpApiGateway\YarpApiGateway.csproj", "{BFA45FA0-7E60-4ED0-ADFA-E6ACA8B4563E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,6 +58,8 @@ Global
 		{2EAF7049-2519-46DA-AE83-E252503564AD} = {07B53C73-7221-47F5-AE08-FA231AFB8BEE}
 		{0BA2BAC8-BAFC-4B1A-A2E4-789179F401A3} = {07B53C73-7221-47F5-AE08-FA231AFB8BEE}
 		{68BF0140-6970-42E2-BDD6-1CE804EF9117} = {07B53C73-7221-47F5-AE08-FA231AFB8BEE}
+		{4EACB599-70DA-48A2-A15F-3EC18FCC7FC7} = {78FD64C8-9AE3-4B8F-8EA5-B82D26E268BB}
+		{BFA45FA0-7E60-4ED0-ADFA-E6ACA8B4563E} = {1119C7B0-CD21-4164-8E7A-151789D43257}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{03506003-4BDB-45A5-B9A6-2FC0916803FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -86,5 +94,13 @@ Global
 		{68BF0140-6970-42E2-BDD6-1CE804EF9117}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68BF0140-6970-42E2-BDD6-1CE804EF9117}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68BF0140-6970-42E2-BDD6-1CE804EF9117}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EACB599-70DA-48A2-A15F-3EC18FCC7FC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EACB599-70DA-48A2-A15F-3EC18FCC7FC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EACB599-70DA-48A2-A15F-3EC18FCC7FC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EACB599-70DA-48A2-A15F-3EC18FCC7FC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFA45FA0-7E60-4ED0-ADFA-E6ACA8B4563E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFA45FA0-7E60-4ED0-ADFA-E6ACA8B4563E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFA45FA0-7E60-4ED0-ADFA-E6ACA8B4563E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFA45FA0-7E60-4ED0-ADFA-E6ACA8B4563E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

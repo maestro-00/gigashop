@@ -4,7 +4,7 @@ public class CreateOrderCommandHandler(IOrderDbContext context) : ICommandHandle
 {
     public async Task<CreateOrderResult> Handle(CreateOrderCommand command, CancellationToken cancellationToken)
     {
-        var order = CreateOrder(command.Dto);
+        var order = CreateOrder(command.Order);
         
         context.Orders.Add(order);
         await context.SaveChangesAsync(cancellationToken);
@@ -26,13 +26,18 @@ public class CreateOrderCommandHandler(IOrderDbContext context) : ICommandHandle
             orderDto.Payment.Cvv, orderDto.Payment.PaymentMethod);
         
         var order = Domain.Models.Order.Create(
-            OrderId.Of(orderDto.Id),
+            OrderId.Of(Guid.NewGuid()),
             CustomerId.Of(orderDto.CustomerId),
             OrderName.Of(orderDto.OrderName),
             billingAddress,
             shippingAddress,
             payment
         );
+        
+        foreach (var orderItemDto in orderDto.OrderItems)
+        {
+            order.AddItem(ProductId.Of(orderItemDto.ProductId), orderItemDto.Quantity, orderItemDto.Price);
+        }
         
         return order;
     }

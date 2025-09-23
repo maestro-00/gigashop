@@ -11,12 +11,13 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
 
-        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
         services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
+        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
         //Add Ef Core Configs
         services.AddDbContext<OrderDbContext>((sp,opt) =>
-        {
-            opt.AddInterceptors(sp.GetService<ISaveChangesInterceptor>()!); 
+        { 
+            var interceptors = sp.GetServices<ISaveChangesInterceptor>();
+            opt.AddInterceptors(interceptors);
             opt.UseSqlServer(configuration.GetConnectionString("Database"));
         });
         

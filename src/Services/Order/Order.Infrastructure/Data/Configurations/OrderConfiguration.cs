@@ -95,8 +95,8 @@ public class OrderConfiguration : IEntityTypeConfiguration<Domain.Models.Order>
                        .HasMaxLength(24)
                        .IsRequired();
 
-                   // paymentBuilder.Property(p => p.Expiration)
-                   //     .HasMaxLength(10);
+                   paymentBuilder.Property(p => p.Expiration)
+                       .HasMaxLength(10);
 
                    paymentBuilder.Property(p => p.CVV)
                        .HasMaxLength(3);

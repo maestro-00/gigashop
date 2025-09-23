@@ -1,0 +1,21 @@
+# This is a generated file. Not intended for manual editing.
+services:
+  catalog.api:
+    build:
+      context: "/home/bosskid/RiderProjects/gigashop/src"
+      dockerfile: "Services/Catalog/Catalog.API/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net9.0/Catalog.API.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "catalog.api:dev"
+    ports: []
+    volumes:
+    - "/home/bosskid/RiderProjects/gigashop/src/Services/Catalog/Catalog.API:/app:rw"
+    - "/home/bosskid/RiderProjects/gigashop/src:/src:rw"
+    - "/home/bosskid/.nuget/packages:/home/app/.nuget/packages"
+    working_dir: "/app"
