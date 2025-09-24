@@ -1,3 +1,8 @@
+using BuildingBlocks.Stripe;
+using Microsoft.Extensions.Options;
+using Stripe;
+using Product = Catalog.API.Models.Product;
+
 namespace Catalog.API.Products.CreateProduct;
 
 public record CreateProductCommand(
@@ -20,8 +25,10 @@ public class CreateProductCommandValidator : AbstractValidator<CreateProductComm
     }
 }
 
-public class CreateProductCommandHandler(IDocumentSession session) : ICommandHandler<CreateProductCommand, CreateProductResult>
+public class CreateProductCommandHandler(IDocumentSession session, ProductService productService, IOptions<StripeModel> stripeOptions) : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
+    private ProductService _productService = productService;
+
     public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
     { 
         //Creating Product Entity
@@ -36,6 +43,29 @@ public class CreateProductCommandHandler(IDocumentSession session) : ICommandHan
         //Saving To Database
         session.Store(product);
         await session.SaveChangesAsync(cancellationToken);
+        
+        //Store in Stripe
+        StripeConfiguration.ApiKey = stripeOptions.Value.SecretKey;
+        
+        var options = new ProductCreateOptions { 
+            Id = product.Id.ToString(),
+            Name = product.Name,
+            Description = product.Description,
+            Images = [product.ImageFile],
+            DefaultPriceData = new ProductDefaultPriceDataOptions
+            {
+                Currency = "USD",
+                UnitAmountDecimal = product.Price * 100
+            }
+        };
+        _productService = new ProductService();
+        var stripeProduct = await _productService.CreateAsync(options, cancellationToken: cancellationToken);
+        product.StripePriceId = stripeProduct.DefaultPriceId;
+        
+        //Saving Stripe Product Price Id
+        session.Update(product);
+        await session.SaveChangesAsync(cancellationToken);
+        
         //Returning Results
         return new CreateProductResult(product.Id); 
     }

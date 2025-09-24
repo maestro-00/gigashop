@@ -1,10 +1,15 @@
+using BuildingBlocks.Stripe;
 using Catalog.API.Data;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container. 
+builder.Services.Configure<StripeModel>(builder.Configuration.GetSection("Stripe"));
+builder.Services.AddScoped<ProductService>();
+
 builder.Services.AddMediatR(config =>
 {
     config.RegisterServicesFromAssembly(typeof(Program).Assembly);

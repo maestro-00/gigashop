@@ -20,18 +20,14 @@ public class BasketCheckoutEventHandler(ISender sender, ILogger<BasketCheckoutEv
     
     private CreateOrderCommand MapToCreateOrderCommand(BasketCheckoutEvent checkoutEvent)
     {
-        var paymentDto = new PaymentDto(checkoutEvent.CardName, checkoutEvent.CardNumber,
-            checkoutEvent.Expiration, checkoutEvent.CVV, checkoutEvent.PaymentMethod);
-        var addressDto = new AddressDto(checkoutEvent.FirstName, checkoutEvent.LastName,
-            checkoutEvent.EmailAddress, checkoutEvent.AddressLine, checkoutEvent.Country,
-            checkoutEvent.State, checkoutEvent.ZipCode);
-
+        var paymentDto = JsonSerializer.Deserialize<PaymentDto>(checkoutEvent.SerializedPayment);
+        var shippingAddress = JsonSerializer.Deserialize<AddressDto>(checkoutEvent.SerializedShippingAddress);
+        var billingAddress = JsonSerializer.Deserialize<AddressDto>(checkoutEvent.SerializedBillingAddress);
         var orderItems = JsonSerializer.Deserialize<List<OrderItemDto>>(checkoutEvent.SerializedOrderItems);
-        // orderItems.ForEach(oi => oi.OrderId = o);
 
         var orderDto = new OrderDto(
-            Guid.NewGuid(), checkoutEvent.CustomerId, checkoutEvent.UserName, addressDto,
-            addressDto, paymentDto, OrderStatus.Pending, orderItems);
+            Guid.NewGuid(), checkoutEvent.CustomerId, checkoutEvent.UserName, shippingAddress,
+            billingAddress, paymentDto, OrderStatus.Pending, orderItems);
 
         return new CreateOrderCommand(orderDto);
     }

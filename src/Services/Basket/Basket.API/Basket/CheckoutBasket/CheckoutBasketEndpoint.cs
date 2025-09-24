@@ -2,9 +2,9 @@ using Basket.API.Dtos;
 
 namespace Basket.API.Basket.CheckoutBasket;
 
-public record CheckoutBasketRequest(CheckoutBasketDto Basket);
+public record CheckoutBasketRequest(CheckoutBasketDto CheckoutDto);
 
-public record CheckoutBasketResponse(bool IsSuccess);
+public record CheckoutBasketResponse(bool IsSuccess, string Url, string StripeSessionId);
 
 public class CheckoutBasketEndpoint : ICarterModule
 {
@@ -20,7 +20,7 @@ public class CheckoutBasketEndpoint : ICarterModule
 
             return Results.Ok(response);
         }).WithName("CheckoutBasket")
-        .Produces<CheckoutBasketResponse>(StatusCodes.Status201Created)
+        .Produces<CheckoutBasketResponse>(StatusCodes.Status202Accepted)
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .WithSummary("Checks out Basket")
         .WithDescription("Checks out basket");
