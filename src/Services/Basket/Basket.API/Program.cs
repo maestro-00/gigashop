@@ -2,14 +2,19 @@
 using BuildingBlocks.Behaviours;
 using BuildingBlocks.Exceptions.Handler;
 using BuildingBlocks.Messaging.MassTransit;
+using BuildingBlocks.Stripe;
 using Discount.Grpc;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Stripe.Checkout;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var assembly = typeof(Program).Assembly;
+
+builder.Services.Configure<StripeModel>(builder.Configuration.GetSection("Stripe"));
+builder.Services.AddScoped<SessionService>();
 builder.Services.AddCarter();
 builder.Services.AddMediatR(config =>
 {
