@@ -1,4 +1,5 @@
 using Discount.Grpc;
+using Grpc.Core;
 
 namespace Basket.API.Basket.StoreBasket;
 public record StoreBasketCommand(ShoppingCart Cart) : ICommand<StoreBasketResult>;
@@ -25,8 +26,17 @@ public class StoreBasketCommandHandler(IBasketRepository repository, DiscountPro
     {
         foreach (var item in cart.Items)
         {
-            var coupon = await discountProto.GetDiscountAsync(new() {ProductName = item.ProductName }, cancellationToken: cancellationToken);
-            item.Price -= coupon.Amount;
+            try
+            {
+                var coupon = await discountProto.GetDiscountAsync(new() { ProductName = item.ProductName },
+                    cancellationToken: cancellationToken);
+                
+                item.Price -= coupon.Amount;
+            }
+            catch (RpcException e)
+            {
+                Console.WriteLine(e); 
+            }
         }
     }
 }
