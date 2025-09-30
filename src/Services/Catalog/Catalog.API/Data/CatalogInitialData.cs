@@ -15,77 +15,77 @@ public class CatalogInitialData : IInitialData
     }
 
     private static IEnumerable<Product> GetPreconfiguredProducts() => new List<Product>()
-    {
-        new()
         {
-            Id = new Guid("5334c996-8457-4cf0-815c-ed2b77c4ff61"),
-            Name = "IPhone X",
-            Description =
-                "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
-            ImageFile = "product-1.png",
-            Price = 950.00M,
-            Category = new List<string> { "Smart Phone" }
-        },
-        new()
-        {
-            Id = new Guid("c67d6323-e8b1-4bdf-9a75-b0d0d2e7e914"),
-            Name = "Samsung 10",
-            Description =
-                "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
-            ImageFile = "product-2.png",
-            Price = 840.00M,
-            Category = new List<string> { "Smart Phone" }
-        },
-        new()
-        {
-            Id = new Guid("4f136e9f-ff8c-4c1f-9a33-d12f689bdab8"),
-            Name = "Huawei Plus",
-            Description =
-                "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
-            ImageFile = "product-3.png",
-            Price = 650.00M,
-            Category = new List<string> { "White Appliances" }
-        },
-        new()
-        {
-            Id = new Guid("6ec1297b-ec0a-4aa1-be25-6726e3b51a27"),
-            Name = "Xiaomi Mi 9",
-            Description =
-                "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
-            ImageFile = "product-4.png",
-            Price = 470.00M,
-            Category = new List<string> { "White Appliances" }
-        },
-        new()
-        {
-            Id = new Guid("b786103d-c621-4f5a-b498-23452610f88c"),
-            Name = "HTC U11+ Plus",
-            Description =
-                "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
-            ImageFile = "product-5.png",
-            Price = 380.00M,
-            Category = new List<string> { "Smart Phone" }
-        },
-        new()
-        {
-            Id = new Guid("c4bbc4a2-4555-45d8-97cc-2a99b2167bff"),
-            Name = "LG G7 ThinQ",
-            Description =
-                "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
-            ImageFile = "product-6.png",
-            Price = 240.00M,
-            Category = new List<string> { "Home Kitchen" }
-        },
-        new()
-        {
-            Id = new Guid("93170c85-7795-489c-8e8f-7dcf3b4f4188"),
-            Name = "Panasonic Lumix",
-            Description =
-                "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
-            ImageFile = "product-6.png",
-            Price = 240.00M,
-            Category = new List<string> { "Camera" }
-        }
-    };
+            new()
+            {
+                Id = new Guid("5334c996-8457-4cf0-815c-ed2b77c4ff61"),
+                Name = "Premium Wireless Headphones",
+                Description =
+                    "High-quality wireless headphones with noise cancellation and premium sound quality. Perfect for music lovers and professionals.",
+                Images = new List<string>
+                {
+                    "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=800&h=600&fit=crop",
+                    "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&h=600&fit=crop"
+                },
+                Sizes = new List<string> { "One Size" },
+                Price = 299.99M,
+                Category = new List<string> { "Electronics" },
+                InStock = true,
+                Rating = 4.8M,
+                ReviewCount = 124,
+                Colors = new List<Color>
+                {
+                    new Color("Black", "#000000"),
+                    new Color("White", "#FFFFFF"),
+                    new Color("Silver", "#C0C0C0")
+                }
+            },
+            new()
+            {
+                Id = new Guid("b6a9d14d-26ff-45d3-ae0e-9386cfc3c442"),
+                Name = "Ergonomic Office Chair",
+                Description =
+                    "Comfortable ergonomic office chair with adjustable height, lumbar support, and breathable mesh back. Ideal for long working hours.",
+                Images = new List<string>
+                {
+                    "https://images.unsplash.com/photo-1598300053650-8c65f75e3d0f?w=800&h=600&fit=crop"
+                },
+                Sizes = new List<string> { "Standard" },
+                Price = 189.50M,
+                Category = new List<string> { "Furniture" },
+                InStock = true,
+                Rating = 4.5M,
+                ReviewCount = 87,
+                Colors = new List<Color>
+                {
+                    new Color("Black", "#000000"),
+                    new Color("Gray", "#808080")
+                }
+            },
+            new()
+            {
+                Id = new Guid("e93745d2-7fae-4f31-802a-89c469afc1c8"),
+                Name = "Smartwatch Series X",
+                Description =
+                    "Next-gen smartwatch with health tracking, GPS, and customizable watch faces. Water-resistant and compatible with iOS and Android.",
+                Images = new List<string>
+                {
+                    "https://images.unsplash.com/photo-1511732351157-1865efcb7b7b?w=800&h=600&fit=crop",
+                    "https://images.unsplash.com/photo-1516222338250-863216ce01f2?w=800&h=600&fit=crop"
+                },
+                Sizes = new List<string> { "Small", "Medium", "Large" },
+                Price = 249.00M,
+                Category = new List<string> { "Wearables", "Electronics" },
+                InStock = true,
+                Rating = 4.6M,
+                ReviewCount = 210,
+                Colors = new List<Color>
+                {
+                    new Color("Black", "#000000"),
+                    new Color("Blue", "#0000FF"),
+                    new Color("Rose Gold", "#B76E79")
+                }
+            }
+        };
 
 }

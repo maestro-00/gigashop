@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useCart } from '@/hooks/useCart';
+import { useCart } from '@/hooks/use-cart';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -336,7 +336,7 @@ const Checkout = () => {
               <CardContent>
                 <div className="space-y-4">
                   {cartItems.map((item) => (
-                    <div key={`${item.product.id}-${item.selectedColor.value}-${item.selectedSize}`} className="flex gap-3">
+                    <div key={`${item.product.id}-${item.color.value}-${item.size}`} className="flex gap-3">
                       <img
                         src={item.product.images[0]}
                         alt={item.product.name}
@@ -347,14 +347,14 @@ const Checkout = () => {
                         <div className="flex items-center gap-2 mt-1">
                           <div
                             className="w-3 h-3 rounded border"
-                            style={{ backgroundColor: item.selectedColor.value }}
+                            style={{ backgroundColor: item.color.value }}
                           />
                           <span className="text-xs text-muted-foreground">
-                            {item.selectedColor.name}
+                            {item.color.name}
                           </span>
-                          {item.selectedSize && (
+                          {item.size && (
                             <Badge variant="secondary" className="text-xs">
-                              {item.selectedSize}
+                              {item.size}
                             </Badge>
                           )}
                         </div>

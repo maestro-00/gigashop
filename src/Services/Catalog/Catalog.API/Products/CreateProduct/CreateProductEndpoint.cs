@@ -5,7 +5,12 @@ public record CreateProductRequest(
     string Description,
     decimal Price,
     List<string> Category,
-    string ImageFile);
+    List<string> Images,
+    List<string> Sizes,
+    bool InStock,
+    decimal Rating,
+    int ReviewCount,
+    List<Color> Colors);
 
 public record CreateProductResponse(Guid Id);
 

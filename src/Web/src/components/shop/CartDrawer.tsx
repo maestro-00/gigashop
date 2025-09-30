@@ -3,7 +3,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/co
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Minus, Plus, X, ShoppingBag } from 'lucide-react';
-import { useCart } from '@/hooks/useCart';
+import { useCart } from '@/hooks/use-cart';
 import { useNavigate } from 'react-router-dom';
 
 interface CartDrawerProps {
@@ -45,7 +45,7 @@ export const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
             <>
               <div className="flex-1 overflow-y-auto space-y-4">
                 {cartItems.map((item) => (
-                  <div key={`${item.product.id}-${item.selectedColor.value}-${item.selectedSize}`} className="border rounded-lg p-4">
+                  <div key={`${item.product.id}-${item.color.value}-${item.size}`} className="border rounded-lg p-4">
                     <div className="flex gap-4">
                       <img
                         src={item.product.images[0]}
@@ -57,15 +57,15 @@ export const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                         <div className="flex items-center gap-2 mt-1">
                           <div
                             className="w-4 h-4 rounded border"
-                            style={{ backgroundColor: item.selectedColor.value }}
-                            title={item.selectedColor.name}
+                            style={{ backgroundColor: item.color.value }}
+                            title={item.color.name}
                           />
                           <span className="text-sm text-muted-foreground">
-                            {item.selectedColor.name}
+                            {item.color.name}
                           </span>
-                          {item.selectedSize && (
+                          {item.size && (
                             <Badge variant="secondary" className="text-xs">
-                              {item.selectedSize}
+                              {item.size}
                             </Badge>
                           )}
                         </div>
@@ -80,8 +80,6 @@ export const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                               className="h-8 w-8"
                               onClick={() => updateQuantity(
                                 item.product.id,
-                                item.selectedColor.value,
-                                item.selectedSize,
                                 item.quantity - 1
                               )}
                             >
@@ -94,8 +92,6 @@ export const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                               className="h-8 w-8"
                               onClick={() => updateQuantity(
                                 item.product.id,
-                                item.selectedColor.value,
-                                item.selectedSize,
                                 item.quantity + 1
                               )}
                             >
@@ -109,9 +105,7 @@ export const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                         size="icon"
                         className="h-8 w-8 text-muted-foreground hover:text-destructive"
                         onClick={() => removeFromCart(
-                          item.product.id,
-                          item.selectedColor.value,
-                          item.selectedSize
+                          item.product.id
                         )}
                       >
                         <X className="h-4 w-4" />

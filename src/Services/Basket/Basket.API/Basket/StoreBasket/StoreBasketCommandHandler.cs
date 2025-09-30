@@ -28,10 +28,10 @@ public class StoreBasketCommandHandler(IBasketRepository repository, DiscountPro
         {
             try
             {
-                var coupon = await discountProto.GetDiscountAsync(new() { ProductName = item.ProductName },
+                var coupon = await discountProto.GetDiscountAsync(new() { ProductName = item.Product.Name },
                     cancellationToken: cancellationToken);
                 
-                item.Price -= coupon.Amount;
+                item.Product.Price -= coupon.Amount;
             }
             catch (RpcException e)
             {

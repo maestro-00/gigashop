@@ -1,27 +1,42 @@
 import { Header } from '@/components/shop/Header';
 import { ProductCard } from '@/components/shop/ProductCard';
-import { mockProducts } from '@/data/products';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Search, Filter } from 'lucide-react';
-import { useState, useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useState, useMemo, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom'; 
+import { Product, CartItem } from '@/types/product'; 
+import { useApi } from "../hooks/use-api";
 
 const Products = () => {
   const [searchParams] = useSearchParams();
+  const { request, loading } = useApi("product-service");
   const cat = searchParams.get("category");
   const [sortBy, setSortBy] = useState('name');
   const [filterCategory, setFilterCategory] = useState(cat ?? 'all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [products,setProducts] = useState<Product[]>([]);
+  const noOfProducts = 100;
   
+  useEffect(() => {
+    (async () => {
+      const data = await request<Product[]>({
+        url: `/products?pageSize=${noOfProducts}`,
+        method: "GET",
+      });
+      if (data) setProducts(data.products); 
+    })();
+  },[])
+
   const categories = useMemo(() => {
-    const categorySet = new Set(mockProducts.map(product => product.category));
+    const categorySet = new Set<string>();
+    products.forEach(product => product.category.forEach(c => categorySet.add(c)));
     return Array.from(categorySet);
-  }, []);
+  }, [products]);
 
   const filteredAndSortedProducts = useMemo(() => {
-    let filtered = mockProducts;
+    let filtered = products;
 
     // Filter by search query
     if (searchQuery) {
@@ -33,7 +48,7 @@ const Products = () => {
 
     // Filter by category
     if (filterCategory !== 'all') {
-      filtered = filtered.filter(product => product.category === filterCategory);
+      filtered = filtered.filter(product => product.category.includes(filterCategory));
     }
 
     // Sort products
@@ -50,7 +65,7 @@ const Products = () => {
           return a.name.localeCompare(b.name);
       }
     });
-  }, [searchQuery, filterCategory, sortBy]);
+  }, [searchQuery, filterCategory, sortBy, products]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -112,7 +127,7 @@ const Products = () => {
         {/* Results Count */}
         <div className="mb-6">
           <p className="text-muted-foreground">
-            Showing {filteredAndSortedProducts.length} of {mockProducts.length} products
+            Showing {filteredAndSortedProducts.length} of {products.length} products
           </p>
         </div>
 

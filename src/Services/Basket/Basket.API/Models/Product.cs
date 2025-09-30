@@ -1,4 +1,4 @@
-namespace Catalog.API.Models;
+namespace Basket.API.Models;
 
 public class Product
 {
@@ -10,8 +10,5 @@ public class Product
     public string StripePriceId { get; set; } = default!;
     public List<string> Images { get; set; } = default!;
     public List<string> Sizes { get; set; } = default!;
-    public List<Color> Colors { get; set; } = default!;
-    public bool InStock { get; set; } = default!; 
-    public decimal Rating { get; set; } = default!;
-    public int ReviewCount { get; set; } = default!;
+    public List<Color> Colors { get; set; } = default!; 
 }
