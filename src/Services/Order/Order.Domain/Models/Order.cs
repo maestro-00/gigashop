@@ -1,3 +1,4 @@
+using System.Text;
 using Order.Domain.Enums; 
 
 namespace Order.Domain.Models;
@@ -54,6 +55,8 @@ public class Order : Aggregate<OrderId>
     
     public void AddItem(ProductId productId, int quantity, decimal price)
     {
+        var sb = new StringBuilder();
+        sb.Append("ddsl");
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(quantity);
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(price);
         

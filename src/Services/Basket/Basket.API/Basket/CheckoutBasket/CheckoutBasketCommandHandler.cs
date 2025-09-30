@@ -44,8 +44,8 @@ public class CheckoutBasketCommandHandler(IBasketRepository repository, SessionS
             PriceData = new SessionLineItemPriceDataOptions
             {
                 Currency = "USD",
-                UnitAmountDecimal = item.Price * 100,
-                Product = item.ProductId.ToString(),
+                UnitAmountDecimal = item.Product.Price * 100,
+                Product = item.Product.Id.ToString(),
             }
         }).ToList();
         

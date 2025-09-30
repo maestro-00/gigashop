@@ -6,7 +6,13 @@ using Product = Catalog.API.Models.Product;
 
 namespace Catalog.API.Products.UpdateProduct;
 
-public record UpdateProductCommand(Guid Id, string Name, string Description, decimal Price, List<string> Category, string ImageFile) : ICommand<UpdateProductResult>;
+public record UpdateProductCommand(Guid Id, string Name, string Description, decimal Price, List<string> Category,
+    List<string> Images,
+    List<string> Sizes,
+    bool InStock,
+    decimal Rating,
+    int ReviewCount,
+    List<Color> Colors) : ICommand<UpdateProductResult>;
 
 public record UpdateProductResult(bool IsSuccess);
 
@@ -16,7 +22,7 @@ public class UpdateProductCommandValidator : AbstractValidator<UpdateProductComm
     {
         RuleFor(x => x.Id).NotEmpty().WithMessage("Product Id is required.");
         RuleFor(x => x.Category).NotEmpty().WithMessage("Category is required.");
-        RuleFor(x => x.ImageFile).NotEmpty().WithMessage("Image is required");
+        RuleFor(x => x.Images).NotEmpty().WithMessage("Image is required");
         RuleFor(x => x.Price).GreaterThan(0).WithMessage("Price is required");
     }
 }
@@ -33,7 +39,12 @@ public class UpdateProductCommandHandler(IDocumentSession session, ProductServic
         productToUpdate.Description = command.Description;
         productToUpdate.Price = command.Price;
         productToUpdate.Category = command.Category;
-        productToUpdate.ImageFile = command.ImageFile;
+        productToUpdate.Images = command.Images;
+        productToUpdate.ReviewCount = command.ReviewCount;
+        productToUpdate.Rating = command.Rating;
+        productToUpdate.Sizes = command.Sizes;
+        productToUpdate.InStock = command.InStock;
+        productToUpdate.Colors = command.Colors;
         
         //Stripe
         StripeConfiguration.ApiKey = stripeOptions.Value.SecretKey;
@@ -47,7 +58,7 @@ public class UpdateProductCommandHandler(IDocumentSession session, ProductServic
             Id = productToUpdate.Id.ToString(),
             Name = productToUpdate.Name,
             Description = productToUpdate.Description,
-            Images = [productToUpdate.ImageFile],
+            Images = productToUpdate.Images,
             DefaultPriceData = new ProductDefaultPriceDataOptions
             {
                 Currency = "USD",
