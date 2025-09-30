@@ -5,11 +5,11 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Star, Heart, ShoppingCart, ArrowLeft, Plus, Minus } from 'lucide-react';
-import { Header } from '@/components/shop/Header';
-import { mockProducts } from '@/data/products';
+import { Header } from '@/components/shop/Header'; 
 import { Product, Color } from '@/types/product';
-import { useCart } from '@/hooks/useCart';
+import { useCart } from '@/hooks/use-cart';
 import { useToast } from '@/hooks/use-toast';
+import { useApi } from "../hooks/use-api";
 
 export const ProductDetail = () => {
   const { id } = useParams();
@@ -18,6 +18,7 @@ export const ProductDetail = () => {
   const { toast } = useToast();
   
   const [product, setProduct] = useState<Product | null>(null);
+  const { request, loading } = useApi("product-service");
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [selectedColor, setSelectedColor] = useState<Color | null>(null);
   const [selectedSize, setSelectedSize] = useState<string>('');
@@ -25,12 +26,17 @@ export const ProductDetail = () => {
   const [isWishListed, setIsWishListed] = useState(false);
 
   useEffect(() => {
-    const foundProduct = mockProducts.find(p => p.id === id);
-    if (foundProduct) {
-      setProduct(foundProduct);
-      setSelectedColor(foundProduct.colors[0]);
-      setSelectedSize(foundProduct.sizes[0]);
-    }
+    (async () => {
+          const data = await request<Product>({
+            url: `/products/${id}`,
+            method: "GET",
+          });
+          if (data) {
+            setProduct(data.product); 
+            setSelectedColor(data.product.colors[0]);
+            setSelectedSize(data.product.sizes[0]);
+          }
+        })();
   }, [id]);
 
   const handleAddToCart = () => {
@@ -129,7 +135,9 @@ export const ProductDetail = () => {
                     {product.rating} ({product.reviewCount} reviews)
                   </span>
                 </div>
-                <Badge variant="secondary">{product.category}</Badge>
+                {product.category.map(c => (
+                  <Badge variant="secondary">{c}</Badge>)
+                )}
               </div>
             </div>
 

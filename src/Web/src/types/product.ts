@@ -21,8 +21,8 @@ export interface Color {
 export interface CartItem {
   product: Product;
   quantity: number;
-  selectedColor: Color;
-  selectedSize: string;
+  color: Color;
+  size: string;
 }
 
 export interface Order {

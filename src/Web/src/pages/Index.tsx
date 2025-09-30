@@ -1,14 +1,29 @@
 import { Header } from '@/components/shop/Header';
 import { ProductCard } from '@/components/shop/ProductCard';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { mockProducts } from '@/data/products';
+import { Badge } from '@/components/ui/badge'; 
 import { ArrowRight, ShoppingBag, Star, Users } from 'lucide-react';
 import heroImage from '@/assets/hero-banner.jpg';
+import { useEffect, useState } from 'react';
+import { Product } from '@/types/product';
+import { useApi } from '@/hooks/use-api';
 
 const Index = () => {
-  const featuredProducts = mockProducts.slice(0, 6);
-  const categories = ['Electronics', 'Accessories', 'Bags', 'Home'];
+  const [products, setProducts] = useState<Product[]>([]);
+  const {request, loading} = useApi('product-service');
+  const noOfProducts = 100;
+  let featuredProducts = [];
+  const categories = ['Electronics', 'Accessories', 'Bags', 'Home', 'Wearable','Furniture'];
+
+  useEffect(() => {
+    (async () => {
+      const data = await request<Product[]>({
+        url: `/products?pageSize=${noOfProducts}`,
+        method: "GET",
+      });
+      if (data) {setProducts(data.products); featuredProducts = data.products.slice(0,6); }
+    })();
+  },[]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -98,7 +113,7 @@ const Index = () => {
                   {category}
                 </h3>
                 <p className="text-muted-foreground">
-                  {mockProducts.filter(p => p.category === category).length} items
+                  {products.filter(p => p.category.includes(category)).length} items
                 </p>
               </div>
             ))}
