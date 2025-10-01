@@ -7,13 +7,15 @@ import heroImage from '@/assets/hero-banner.jpg';
 import { useEffect, useState } from 'react';
 import { Product } from '@/types/product';
 import { useApi } from '@/hooks/use-api';
+import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const {request, loading} = useApi('product-service');
   const noOfProducts = 100;
-  let featuredProducts = [];
+  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const categories = ['Electronics', 'Accessories', 'Bags', 'Home', 'Wearable','Furniture'];
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -21,7 +23,7 @@ const Index = () => {
         url: `/products?pageSize=${noOfProducts}`,
         method: "GET",
       });
-      if (data) {setProducts(data.products); featuredProducts = data.products.slice(0,6); }
+      if (data) {setProducts(data.products); setFeaturedProducts(data.products.slice(0,6)); }
     })();
   },[]);
 
@@ -47,11 +49,11 @@ const Index = () => {
             Discover luxury products crafted for the modern lifestyle
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-shop-accent hover:bg-shop-accent-hover text-shop-accent-foreground">
+            <Button size="lg" className="bg-shop-accent hover:bg-shop-accent-hover text-shop-accent-foreground" onClick={() => navigate('/products')}>
               <ShoppingBag className="mr-2 h-5 w-5" />
               Shop Now
             </Button>
-            <Button size="lg" variant="outline" className="border-white hover:border-slate-200 hover:bg-slate-200 text-primary">
+            <Button size="lg" variant="outline" className="border-white hover:border-slate-200 hover:bg-slate-200 text-primary hover:text-shop-accent transition-colors" onClick={() => navigate('/categories')}>
               Explore Categories
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
@@ -108,6 +110,7 @@ const Index = () => {
               <div
                 key={category}
                 className="group relative overflow-hidden rounded-lg bg-muted hover:bg-muted/80 p-8 text-center cursor-pointer transition-all duration-300 hover:scale-105"
+                onClick={() => navigate(`/products?category=${encodeURIComponent(category)}`)}
               >
                 <h3 className="text-xl font-semibold mb-2 group-hover:text-shop-accent transition-colors">
                   {category}
@@ -136,7 +139,7 @@ const Index = () => {
             ))}
           </div>
           <div className="text-center mt-12">
-            <Button size="lg" variant="outline">
+            <Button size="lg" variant="outline" onClick={() => navigate('/products')}>
               View All Products
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
