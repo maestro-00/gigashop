@@ -41,12 +41,20 @@ export const ProductDetail = () => {
 
   const handleAddToCart = async () => {
     if (!product || !selectedColor || !selectedSize) return;
-    
-    await addToCart(product, selectedColor, selectedSize, quantity);
-    toast({
-      title: "Added to cart",
-      description: `${product.name} has been added to your cart.`,
-    });
+
+    try {
+      await addToCart(product, selectedColor, selectedSize, quantity);
+      toast({
+        title: "Added to cart",
+        description: `${product.name} has been added to your cart.`,
+      });
+    } catch (error) {
+      toast({
+        title: "Failed to add to cart",
+        description: "There was a problem adding this product to your cart. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   if (!product) {
