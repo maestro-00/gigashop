@@ -39,10 +39,10 @@ export const ProductDetail = () => {
         })();
   }, [id]);
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     if (!product || !selectedColor || !selectedSize) return;
     
-    addToCart(product, selectedColor, selectedSize, quantity);
+    await addToCart(product, selectedColor, selectedSize, quantity);
     toast({
       title: "Added to cart",
       description: `${product.name} has been added to your cart.`,
@@ -136,7 +136,7 @@ export const ProductDetail = () => {
                   </span>
                 </div>
                 {product.category.map(c => (
-                  <Badge variant="secondary">{c}</Badge>)
+                  <Badge key={c} variant="secondary">{c}</Badge>)
                 )}
               </div>
             </div>
