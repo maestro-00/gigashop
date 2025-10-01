@@ -166,33 +166,65 @@ const Checkout = () => {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <Label htmlFor="shipping-firstName">First Name</Label>
-                      <Input id="shipping-firstName" required />
+                      <Input 
+                        id="shipping-firstName" 
+                        value={shippingForm.firstName}
+                        onChange={(e) => handleShippingChange('firstName', e.target.value)}
+                        required 
+                      />
                     </div>
                     <div>
                       <Label htmlFor="shipping-lastName">Last Name</Label>
-                      <Input id="shipping-lastName" required />
+                      <Input 
+                        id="shipping-lastName" 
+                        value={shippingForm.lastName}
+                        onChange={(e) => handleShippingChange('lastName', e.target.value)}
+                        required 
+                      />
                     </div>
                   </div>
                   <div>
                     <Label htmlFor="shipping-email">Email</Label>
-                    <Input id="shipping-email" type="email" required />
+                    <Input 
+                      id="shipping-email" 
+                      type="email" 
+                      value={shippingForm.email}
+                      onChange={(e) => handleShippingChange('email', e.target.value)}
+                      required 
+                    />
                   </div>
                   <div>
                     <Label htmlFor="shipping-phone">Phone</Label>
-                    <Input id="shipping-phone" type="tel" required />
+                    <Input 
+                      id="shipping-phone" 
+                      type="tel" 
+                      value={shippingForm.phone}
+                      onChange={(e) => handleShippingChange('phone', e.target.value)}
+                      required 
+                    />
                   </div>
                   <div>
                     <Label htmlFor="shipping-street">Street Address</Label>
-                    <Input id="shipping-street" required />
+                    <Input 
+                      id="shipping-street" 
+                      value={shippingForm.street}
+                      onChange={(e) => handleShippingChange('street', e.target.value)}
+                      required 
+                    />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <Label htmlFor="shipping-city">City</Label>
-                      <Input id="shipping-city" required />
+                      <Input 
+                        id="shipping-city" 
+                        value={shippingForm.city}
+                        onChange={(e) => handleShippingChange('city', e.target.value)}
+                        required 
+                      />
                     </div>
                     <div>
                       <Label htmlFor="shipping-state">State</Label>
-                      <Select>
+                      <Select value={shippingForm.state} onValueChange={(value) => handleShippingChange('state', value)}>
                         <SelectTrigger>
                           <SelectValue placeholder="Select state" />
                         </SelectTrigger>
@@ -208,11 +240,16 @@ const Checkout = () => {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <Label htmlFor="shipping-zipCode">ZIP Code</Label>
-                      <Input id="shipping-zipCode" required />
+                      <Input 
+                        id="shipping-zipCode" 
+                        value={shippingForm.zipCode}
+                        onChange={(e) => handleShippingChange('zipCode', e.target.value)}
+                        required 
+                      />
                     </div>
                     <div>
                       <Label htmlFor="shipping-country">Country</Label>
-                      <Select defaultValue="US">
+                      <Select value={shippingForm.country} onValueChange={(value) => handleShippingChange('country', value)}>
                         <SelectTrigger>
                           <SelectValue />
                         </SelectTrigger>
@@ -252,25 +289,45 @@ const Checkout = () => {
                       <div className="grid grid-cols-2 gap-4">
                         <div>
                           <Label htmlFor="billing-firstName">First Name</Label>
-                          <Input id="billing-firstName" required />
+                          <Input 
+                            id="billing-firstName" 
+                            value={billingForm.firstName}
+                            onChange={(e) => handleBillingChange('firstName', e.target.value)}
+                            required 
+                          />
                         </div>
                         <div>
                           <Label htmlFor="billing-lastName">Last Name</Label>
-                          <Input id="billing-lastName" required />
+                          <Input 
+                            id="billing-lastName" 
+                            value={billingForm.lastName}
+                            onChange={(e) => handleBillingChange('lastName', e.target.value)}
+                            required 
+                          />
                         </div>
                       </div>
                       <div>
                         <Label htmlFor="billing-street">Street Address</Label>
-                        <Input id="billing-street" required />
+                        <Input 
+                          id="billing-street" 
+                          value={billingForm.street}
+                          onChange={(e) => handleBillingChange('street', e.target.value)}
+                          required 
+                        />
                       </div>
                       <div className="grid grid-cols-2 gap-4">
                         <div>
                           <Label htmlFor="billing-city">City</Label>
-                          <Input id="billing-city" required />
+                          <Input 
+                            id="billing-city" 
+                            value={billingForm.city}
+                            onChange={(e) => handleBillingChange('city', e.target.value)}
+                            required 
+                          />
                         </div>
                         <div>
                           <Label htmlFor="billing-state">State</Label>
-                          <Select>
+                          <Select value={billingForm.state} onValueChange={(value) => handleBillingChange('state', value)}>
                             <SelectTrigger>
                               <SelectValue placeholder="Select state" />
                             </SelectTrigger>
@@ -286,11 +343,16 @@ const Checkout = () => {
                       <div className="grid grid-cols-2 gap-4">
                         <div>
                           <Label htmlFor="billing-zipCode">ZIP Code</Label>
-                          <Input id="billing-zipCode" required />
+                          <Input 
+                            id="billing-zipCode" 
+                            value={billingForm.zipCode}
+                            onChange={(e) => handleBillingChange('zipCode', e.target.value)}
+                            required 
+                          />
                         </div>
                         <div>
                           <Label htmlFor="billing-country">Country</Label>
-                          <Select defaultValue="US">
+                          <Select value={billingForm.country} onValueChange={(value) => handleBillingChange('country', value)}>
                             <SelectTrigger>
                               <SelectValue />
                             </SelectTrigger>
