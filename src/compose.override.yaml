@@ -148,3 +148,11 @@ services:
         - mssql_order:/var/opt/mssql
       ports:
         - "1433:1433"
+    
+    web:
+      container_name: web
+      restart: always
+      ports:
+        - "3000:80"
+      depends_on:
+        - yarpapigateway
