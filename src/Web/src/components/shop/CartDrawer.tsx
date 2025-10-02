@@ -48,9 +48,13 @@ export const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                   <div key={`${item.product.id}-${item.color.value}-${item.size}`} className="border rounded-lg p-4">
                     <div className="flex gap-4">
                       <img
-                        src={item.product.images[0]}
+                        src={item.product.images?.[0] || '/placeholder.svg'}
                         alt={item.product.name}
                         className="w-16 h-16 object-cover rounded"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = '/placeholder.svg';
+                        }}
                       />
                       <div className="flex-1 min-w-0">
                         <h4 className="font-medium truncate">{item.product.name}</h4>

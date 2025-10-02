@@ -400,9 +400,13 @@ const Checkout = () => {
                   {cartItems.map((item) => (
                     <div key={`${item.product.id}-${item.color.value}-${item.size}`} className="flex gap-3">
                       <img
-                        src={item.product.images[0]}
+                        src={item.product.images?.[0] || '/placeholder.svg'}
                         alt={item.product.name}
                         className="w-16 h-16 object-cover rounded"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = '/placeholder.svg';
+                        }}
                       />
                       <div className="flex-1 min-w-0">
                         <h4 className="font-medium text-sm truncate">{item.product.name}</h4>

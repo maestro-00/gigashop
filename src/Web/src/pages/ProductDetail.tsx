@@ -91,9 +91,13 @@ export const ProductDetail = () => {
           <div className="space-y-4">
             <div className="relative">
               <img
-                src={product.images[selectedImageIndex]}
+                src={product.images?.[selectedImageIndex] || '/placeholder.svg'}
                 alt={product.name}
                 className="w-full h-96 lg:h-[500px] object-cover rounded-lg"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src = '/placeholder.svg';
+                }}
               />
               {discountPercentage > 0 && (
                 <Badge className="absolute top-4 left-4 bg-sale text-sale-foreground">
@@ -102,7 +106,7 @@ export const ProductDetail = () => {
               )}
             </div>
             
-            {product.images.length > 1 && (
+            {product.images && product.images.length > 1 && (
               <div className="flex gap-2 overflow-x-auto">
                 {product.images.map((image, index) => (
                   <button
@@ -113,9 +117,13 @@ export const ProductDetail = () => {
                     }`}
                   >
                     <img
-                      src={image}
+                      src={image || '/placeholder.svg'}
                       alt={`${product.name} ${index + 1}`}
                       className="w-full h-full object-cover"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = '/placeholder.svg';
+                      }}
                     />
                   </button>
                 ))}
