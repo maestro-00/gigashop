@@ -1,0 +1,25 @@
+# This file defines code ownership for the GigaShop project
+# Code owners will be automatically requested for review when someone opens a pull request
+
+# Default owners for everything in the repo
+* @maestro-00
+
+# Backend services
+/src/Services/ @maestro-00
+/src/BuildingBlocks/ @maestro-00
+/src/ApiGateways/ @maestro-00
+
+# Frontend
+/src/Web/ @maestro-00
+
+# Infrastructure
+/src/compose.yaml @maestro-00
+/src/compose.override.yaml @maestro-00
+*.Dockerfile @maestro-00
+
+# Documentation
+*.md @maestro-00
+/docs/ @maestro-00
+
+# CI/CD
+/.github/ @maestro-00

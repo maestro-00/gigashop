@@ -26,9 +26,13 @@ export const ProductCard = ({ product }: ProductCardProps) => {
     <Card className="group overflow-hidden shadow-product hover:shadow-card transition-all duration-300 cursor-pointer">
       <div className="relative overflow-hidden" onClick={handleProductClick}>
         <img
-          src={product.images[0]}
+          src={product.images?.[0] || '/placeholder.svg'}
           alt={product.name}
           className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = '/placeholder.svg';
+          }}
         />
         {discountPercentage > 0 && (
           <Badge className="absolute top-3 left-3 bg-sale text-sale-foreground">

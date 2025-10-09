@@ -43,6 +43,16 @@
     build:
       context: .
       dockerfile: ApiGateways/YarpApiGateway/Dockerfile
+  
+  web:
+    image: web
+    build:
+      context: .
+      dockerfile: Web/Dockerfile
+      args:
+        VITE_CART_SERVICE_URL: http://localhost:6004/basket-service
+        VITE_PRODUCT_SERVICE_URL: http://localhost:6004/catalog-service
+        VITE_USER_SERVICE_URL: http://localhost:6004/order-service
     
 volumes:
   postgres_catalog:
