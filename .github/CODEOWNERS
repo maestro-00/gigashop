@@ -1,0 +1,25 @@
+# This file defines code ownership for the GigaShop project
+# Code owners will be automatically requested for review when someone opens a pull request
+
+# Default owners for everything in the repo
+* @Lukada-taiya
+
+# Backend services
+/src/Services/ @Lukada-taiya
+/src/BuildingBlocks/ @Lukada-taiya
+/src/ApiGateways/ @Lukada-taiya
+
+# Frontend
+/src/Web/ @Lukada-taiya
+
+# Infrastructure
+/src/compose.yaml @Lukada-taiya
+/src/compose.override.yaml @Lukada-taiya
+*.Dockerfile @Lukada-taiya
+
+# Documentation
+*.md @Lukada-taiya
+/docs/ @Lukada-taiya
+
+# CI/CD
+/.github/ @Lukada-taiya
