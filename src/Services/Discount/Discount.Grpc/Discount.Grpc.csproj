@@ -9,10 +9,10 @@
 
     <ItemGroup>
         <!-- Runtime support -->
-        <PackageReference Include="Grpc.AspNetCore" Version="2.64.0" />
+        <PackageReference Include="Grpc.AspNetCore" Version="2.71.0" />
 
         <!-- Compile-time codegen tools (not needed at runtime, so PrivateAssets=All) -->
-        <PackageReference Include="Grpc.Tools" Version="2.64.0">
+        <PackageReference Include="Grpc.Tools" Version="2.71.0">
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.9">
