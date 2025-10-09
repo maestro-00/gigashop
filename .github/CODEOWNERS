@@ -2,24 +2,24 @@
 # Code owners will be automatically requested for review when someone opens a pull request
 
 # Default owners for everything in the repo
-* @Lukada-taiya
+* @maestro-00
 
 # Backend services
-/src/Services/ @Lukada-taiya
-/src/BuildingBlocks/ @Lukada-taiya
-/src/ApiGateways/ @Lukada-taiya
+/src/Services/ @maestro-00
+/src/BuildingBlocks/ @maestro-00
+/src/ApiGateways/ @maestro-00
 
 # Frontend
-/src/Web/ @Lukada-taiya
+/src/Web/ @maestro-00
 
 # Infrastructure
-/src/compose.yaml @Lukada-taiya
-/src/compose.override.yaml @Lukada-taiya
-*.Dockerfile @Lukada-taiya
+/src/compose.yaml @maestro-00
+/src/compose.override.yaml @maestro-00
+*.Dockerfile @maestro-00
 
 # Documentation
-*.md @Lukada-taiya
-/docs/ @Lukada-taiya
+*.md @maestro-00
+/docs/ @maestro-00
 
 # CI/CD
-/.github/ @Lukada-taiya
+/.github/ @maestro-00
