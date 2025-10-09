@@ -416,7 +416,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👥 Authors
 
-- **Adam Tungtaiya Lukman** - *Initial work* - [@Lukada-taiya](https://github.com/Lukada-taiya)
+- **Adam Tungtaiya Lukman** - *Initial work* - [@maestro-00](https://github.com/maestro-00)
 
 ## 🙏 Acknowledgments
 
@@ -426,9 +426,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- 📧 Email: [Create an issue](https://github.com/Lukada-taiya/gigashop/issues)
-- 💬 Discussions: [GitHub Discussions](https://github.com/Lukada-taiya/gigashop/discussions)
-- 🐛 Bug Reports: [Issue Tracker](https://github.com/Lukada-taiya/gigashop/issues)
+- 📧 Email: [Create an issue](https://github.com/maestro-00/gigashop/issues)
+- 💬 Discussions: [GitHub Discussions](https://github.com/maestro-00/gigashop/discussions)
+- 🐛 Bug Reports: [Issue Tracker](https://github.com/maestro-00/gigashop/issues)
 
 ---
 
