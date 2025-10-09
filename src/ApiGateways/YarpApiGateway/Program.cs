@@ -11,7 +11,18 @@ builder.Services.AddRateLimiter(options =>
         opt.Window = TimeSpan.FromSeconds(10);
     });
 });
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy("Web", p =>
+    {
+        p.WithOrigins("http://localhost:3000", "http://localhost:8080")
+         .AllowAnyMethod()
+         .AllowAnyHeader()
+         .AllowCredentials();
+    });
+});
 var app = builder.Build();
+app.UseCors("Web");
 app.UseRateLimiter();
 app.MapReverseProxy();
 app.Run();
