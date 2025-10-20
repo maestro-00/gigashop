@@ -17,7 +17,7 @@
         <PackageReference Include="Marten" Version="7.36.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.7"/>
         <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="9.0.9" />
-        <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="9.0.8" />
+        <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="9.0.10" />
         <PackageReference Include="Scrutor" Version="6.1.0" />
     </ItemGroup>
 
