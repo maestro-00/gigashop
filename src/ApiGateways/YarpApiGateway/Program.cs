@@ -24,5 +24,9 @@ builder.Services.AddCors(opt =>
 var app = builder.Build();
 app.UseCors("Web");
 app.UseRateLimiter();
+
+// Add health check endpoint
+app.MapGet("/health", () => "Healthy");
+
 app.MapReverseProxy();
 app.Run();
