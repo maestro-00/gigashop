@@ -1,0 +1,135 @@
+name: Deploy to Azure Kubernetes Service
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  workflow_dispatch:
+
+env:
+  ACR_NAME: gigashopacr
+  RESOURCE_GROUP: gigashop-rg
+  AKS_CLUSTER_NAME: gigashop-aks
+  NAMESPACE: gigashop
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service:
+          - name: catalog-api
+            dockerfile: Services/Catalog/Catalog.API/Dockerfile
+          - name: basket-api
+            dockerfile: Services/Basket/Basket.API/Dockerfile
+          - name: order-api
+            dockerfile: Services/Order/Order.API/Dockerfile
+          - name: discount-grpc
+            dockerfile: Services/Discount/Discount.Grpc/Dockerfile
+          - name: apigateway
+            dockerfile: ApiGateways/YarpApiGateway/Dockerfile
+          - name: web
+            dockerfile: Web/Dockerfile
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Log in to Azure Container Registry
+        run: |
+          az acr login --name ${{ env.ACR_NAME }}
+
+      - name: Get ACR login server
+        id: acr
+        run: |
+          ACR_LOGIN_SERVER=$(az acr show --name ${{ env.ACR_NAME }} --query loginServer --output tsv)
+          echo "login_server=$ACR_LOGIN_SERVER" >> $GITHUB_OUTPUT
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./src
+          file: ./src/${{ matrix.service.dockerfile }}
+          push: true
+          tags: |
+            ${{ steps.acr.outputs.login_server }}/${{ matrix.service.name }}:${{ github.sha }}
+            ${{ steps.acr.outputs.login_server }}/${{ matrix.service.name }}:latest
+          cache-from: type=registry,ref=${{ steps.acr.outputs.login_server }}/${{ matrix.service.name }}:buildcache
+          cache-to: type=registry,ref=${{ steps.acr.outputs.login_server }}/${{ matrix.service.name }}:buildcache,mode=max
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Get AKS credentials
+        run: |
+          az aks get-credentials \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --name ${{ env.AKS_CLUSTER_NAME }} \
+            --overwrite-existing
+
+      - name: Get ACR login server
+        id: acr
+        run: |
+          ACR_LOGIN_SERVER=$(az acr show --name ${{ env.ACR_NAME }} --query loginServer --output tsv)
+          echo "login_server=$ACR_LOGIN_SERVER" >> $GITHUB_OUTPUT
+
+      - name: Update Kubernetes manifests with image tags
+        run: |
+          cd k8s
+          find . -type f -name "*.yaml" -exec sed -i "s|<ACR_NAME>|${{ steps.acr.outputs.login_server }}|g" {} +
+          find . -type f -name "*-deployment.yaml" -exec sed -i "s|:latest|:${{ github.sha }}|g" {} +
+
+      - name: Deploy to AKS
+        run: |
+          kubectl apply -f k8s/namespace.yaml
+          kubectl apply -f k8s/databases/
+          kubectl apply -f k8s/infrastructure/
+          
+          # Wait for databases and infrastructure
+          sleep 30
+          
+          kubectl apply -f k8s/services/
+          kubectl apply -f k8s/gateway/
+          kubectl apply -f k8s/frontend/
+          kubectl apply -f k8s/ingress/
+
+      - name: Wait for deployments to be ready
+        run: |
+          kubectl wait --for=condition=available --timeout=300s \
+            deployment --all -n ${{ env.NAMESPACE }}
+
+      - name: Get deployment status
+        run: |
+          echo "=== Pods Status ==="
+          kubectl get pods -n ${{ env.NAMESPACE }}
+          echo ""
+          echo "=== Services Status ==="
+          kubectl get svc -n ${{ env.NAMESPACE }}
+          echo ""
+          echo "=== Ingress Status ==="
+          kubectl get ingress -n ${{ env.NAMESPACE }}
+
+      - name: Rollback on failure
+        if: failure()
+        run: |
+          echo "Deployment failed. Rolling back..."
+          kubectl rollout undo deployment --all -n ${{ env.NAMESPACE }}

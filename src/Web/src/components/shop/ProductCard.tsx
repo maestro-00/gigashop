@@ -90,22 +90,23 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           <p className="text-sm text-muted-foreground line-clamp-2">
             {product.description}
           </p>
-
-          <div className="flex flex-wrap gap-1 mt-2">
-            {product.colors.slice(0, 3).map((color) => (
-              <div
-                key={color.name}
-                className="w-4 h-4 rounded-full border border-gray-300"
-                style={{ backgroundColor: color.value }}
-                title={color.name}
-              />
-            ))}
-            {product.colors.length > 3 && (
-              <span className="text-xs text-muted-foreground">
-                +{product.colors.length - 3} more
-              </span>
-            )}
-          </div>
+            {product.colors &&
+            <div className="flex flex-wrap gap-1 mt-2">
+              {product.colors.slice(0, 3).map((color) => (
+                <div
+                  key={color.name}
+                  className="w-4 h-4 rounded-full border border-gray-300"
+                  style={{ backgroundColor: color.value }}
+                  title={color.name}
+                />
+              ))}
+              {product.colors.length > 3 && (
+                <span className="text-xs text-muted-foreground">
+                  +{product.colors.length - 3} more
+                </span>
+              )}
+            </div>
+            }
         </div>
       </CardContent>
     </Card>

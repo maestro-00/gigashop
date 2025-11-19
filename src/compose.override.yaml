@@ -37,6 +37,7 @@ services:
         - ASPNETCORE_HTTPS_PORTS=8081
         - ASPNETCORE_Kestrel__Certificates__Default__Password=sdklrcybgsczr
         - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/catalog.api.pfx
+        - ASPNETCORE_Kestrel__EndpointDefaults__Protocols=Http1AndHttp2
         - ConnectionStrings__Database=Server=catalogdb;Port=5432;Database=CatalogDb;User Id=postgres;Password=postgres;Include Error Detail=true
       volumes:
         - ~/.aspnet/https:/https:ro
@@ -65,6 +66,7 @@ services:
         - ASPNETCORE_HTTPS_PORTS=8081
         - ASPNETCORE_Kestrel__Certificates__Default__Password=sdklrcybgsczr
         - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/basket.api.pfx
+        - ASPNETCORE_Kestrel__EndpointDefaults__Protocols=Http1AndHttp2
         - ConnectionStrings__Database=Server=basketdb;Port=5432;Database=BasketDb;User Id=postgres;Password=postgres;Include Error Detail=true
         - ConnectionStrings__Redis=distributedcache:6379
         - GrpcSettings__DiscountUrl=https://discount.grpc:8081
@@ -90,6 +92,7 @@ services:
         - ASPNETCORE_HTTPS_PORTS=8081
         - ASPNETCORE_Kestrel__Certificates__Default__Password=sdklrcybgsczr
         - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/order.api.pfx
+        - ASPNETCORE_Kestrel__EndpointDefaults__Protocols=Http1AndHttp2
         - ConnectionStrings__Database=Server=orderdb;Database=OrderDb;User Id=sa;Password=Rhonin1234;Encrypt=false;TrustServerCertificate=true
         - MessageBroker__Host=amqp://ecommerce-mq:5672
         - MessageBroker__Username=guest
@@ -113,6 +116,7 @@ services:
         - ConnectionStrings__Database=Data Source = discountdb
         - ASPNETCORE_Kestrel__Certificates__Default__Password=sdklrcybgsczr
         - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/discount.grpc.pfx
+        - ASPNETCORE_Kestrel__EndpointDefaults__Protocols=Http1AndHttp2
       volumes:
         - ~/.aspnet/https:/https:ro
       ports:
@@ -127,6 +131,7 @@ services:
         - ASPNETCORE_HTTPS_PORTS=8081 
         - ASPNETCORE_Kestrel__Certificates__Default__Password=sdklrcybgsczr
         - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/apigateway.pfx
+        - ASPNETCORE_Kestrel__EndpointDefaults__Protocols=Http1AndHttp2
       volumes:
         - ~/.aspnet/https:/https:ro
         
