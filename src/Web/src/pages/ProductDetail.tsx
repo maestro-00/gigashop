@@ -5,7 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Star, Heart, ShoppingCart, ArrowLeft, Plus, Minus } from 'lucide-react';
-import { Header } from '@/components/shop/Header'; 
+import { Header } from '@/components/shop/Header';
 import { Product, Color } from '@/types/product';
 import { useCart } from '@/hooks/use-cart';
 import { useToast } from '@/hooks/use-toast';
@@ -16,7 +16,7 @@ export const ProductDetail = () => {
   const navigate = useNavigate();
   const { addToCart } = useCart();
   const { toast } = useToast();
-  
+
   const [product, setProduct] = useState<Product | null>(null);
   const { request, loading } = useApi("product-service");
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
@@ -32,9 +32,9 @@ export const ProductDetail = () => {
             method: "GET",
           });
           if (data) {
-            setProduct(data.product); 
-            setSelectedColor(data.product.colors[0]);
-            setSelectedSize(data.product.sizes[0]);
+            setProduct(data.product);
+            setSelectedColor(data.product.colors?.length > 1 ? data.product.colors[0] : '');
+            setSelectedSize(data.product.sizes?.length > 1 ? data.product.sizes[0] : '');
           }
         })();
   }, [id]);
@@ -68,14 +68,14 @@ export const ProductDetail = () => {
     );
   }
 
-  const discountPercentage = product.originalPrice 
+  const discountPercentage = product.originalPrice
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0;
 
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
+
       <div className="container mx-auto px-4 py-8">
         <Button
           variant="ghost"
@@ -105,7 +105,7 @@ export const ProductDetail = () => {
                 </Badge>
               )}
             </div>
-            
+
             {product.images && product.images.length > 1 && (
               <div className="flex gap-2 overflow-x-auto">
                 {product.images.map((image, index) => (
@@ -175,6 +175,7 @@ export const ProductDetail = () => {
             <Separator />
 
             {/* Color Selection */}
+            {product.colors &&
             <div>
               <h3 className="font-semibold mb-3">Color: {selectedColor?.name}</h3>
               <div className="flex gap-3">
@@ -193,9 +194,10 @@ export const ProductDetail = () => {
                 ))}
               </div>
             </div>
+            }
 
             {/* Size Selection */}
-            {product.sizes.length > 1 && (
+            {product.sizes?.length > 1 && (
               <div>
                 <h3 className="font-semibold mb-3">Size</h3>
                 <div className="flex gap-2">
@@ -247,7 +249,7 @@ export const ProductDetail = () => {
                 <ShoppingCart className="h-5 w-5 mr-2" />
                 Add to Cart - ${(product.price * quantity).toFixed(2)}
               </Button>
-              
+
               <Button
                 variant="outline"
                 onClick={() => setIsWishListed(!isWishListed)}

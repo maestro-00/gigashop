@@ -1,7 +1,7 @@
 import { Header } from '@/components/shop/Header';
 import { ProductCard } from '@/components/shop/ProductCard';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge'; 
+import { Badge } from '@/components/ui/badge';
 import { ArrowRight, ShoppingBag, Star, Users } from 'lucide-react';
 import heroImage from '@/assets/hero-banner.jpg';
 import { useEffect, useState } from 'react';
@@ -30,7 +30,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
+
       {/* Hero Section */}
       <section className="relative h-[600px] flex items-center justify-center overflow-hidden">
         <div
