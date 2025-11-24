@@ -55,7 +55,7 @@ jobs:
           echo "login_server=$ACR_LOGIN_SERVER" >> $GITHUB_OUTPUT
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: ./src
           file: ./src/${{ matrix.service.dockerfile }}
